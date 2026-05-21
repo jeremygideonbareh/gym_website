@@ -131,28 +131,11 @@ export default function ScrollAdventure({ onEscapeUp, onEscapeDown, locked, init
       }
     }
 
-    let touchStartY = 0
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY
-    }
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (scrolling.current) return
-      const deltaY = touchStartY - e.changedTouches[0].clientY
-      if (Math.abs(deltaY) < 40) return
-      scrolling.current = true
-      deltaY > 0 ? navigateDown() : navigateUp()
-      setTimeout(() => (scrolling.current = false), animTime)
-    }
-
     window.addEventListener('wheel', handleWheel, { passive: true })
     window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd, { passive: true })
     return () => {
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [numOfPages, locked])
 
@@ -184,15 +167,15 @@ export default function ScrollAdventure({ onEscapeUp, onEscapeDown, locked, init
                 <div className="w-full h-full bg-black/50 flex flex-col items-center justify-center text-white p-8">
                   {page.leftContent && (
                     <>
-                      <h2 className="text-xl md:text-3xl lg:text-5xl font-barlow font-bold uppercase mb-4 md:mb-6 text-center px-2">
+                      <h2 className="text-4xl md:text-5xl font-barlow font-bold uppercase mb-6 text-center">
                         {page.leftContent.heading}
                       </h2>
                       {typeof page.leftContent.description === 'string' ? (
-                        <p className="text-xs md:text-base lg:text-xl font-inter text-center max-w-[160px] md:max-w-md px-1">
+                        <p className="text-lg md:text-xl font-inter text-center max-w-md">
                           {page.leftContent.description}
                         </p>
                       ) : (
-                        <div className="text-xs md:text-base lg:text-xl font-inter text-center max-w-[160px] md:max-w-md px-1">
+                        <div className="text-lg md:text-xl font-inter text-center max-w-md">
                           {page.leftContent.description}
                         </div>
                       )}
@@ -218,15 +201,15 @@ export default function ScrollAdventure({ onEscapeUp, onEscapeDown, locked, init
                 <div className="w-full h-full bg-black/50 flex flex-col items-center justify-center text-white p-8">
                   {page.rightContent && (
                     <>
-                      <h2 className="text-xl md:text-3xl lg:text-5xl font-barlow font-bold uppercase mb-4 md:mb-6 text-center px-2">
+                      <h2 className="text-4xl md:text-5xl font-barlow font-bold uppercase mb-6 text-center">
                         {page.rightContent.heading}
                       </h2>
                       {typeof page.rightContent.description === 'string' ? (
-                        <p className="text-xs md:text-base lg:text-xl font-inter text-center max-w-[160px] md:max-w-md px-1">
+                        <p className="text-lg md:text-xl font-inter text-center max-w-md">
                           {page.rightContent.description}
                         </p>
                       ) : (
-                        <div className="text-xs md:text-base lg:text-xl font-inter text-center max-w-[160px] md:max-w-md px-1">
+                        <div className="text-lg md:text-xl font-inter text-center max-w-md">
                           {page.rightContent.description}
                         </div>
                       )}
@@ -237,34 +220,34 @@ export default function ScrollAdventure({ onEscapeUp, onEscapeDown, locked, init
             </div>
 
             {/* Skip up / down buttons */}
-            <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-2 md:gap-3">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
               <button
                 onClick={onEscapeUp}
-                className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur flex items-center justify-center text-white/70 hover:text-white transition-all"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur flex items-center justify-center text-white/70 hover:text-white transition-all"
                 title="Skip up"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
                 </svg>
               </button>
               <button
                 onClick={onEscapeDown}
-                className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur flex items-center justify-center text-white/70 hover:text-white transition-all"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur flex items-center justify-center text-white/70 hover:text-white transition-all"
                 title="Skip down"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
             </div>
 
             {/* Page indicator dots */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3 md:gap-4">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3">
               {pages.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
                   onClick={() => setCurrentPage(dotIdx + 1)}
-                  className={`w-4 h-4 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentPage === dotIdx + 1
                       ? 'bg-primary scale-125'
                       : 'bg-white/30 hover:bg-white/60'

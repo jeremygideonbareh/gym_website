@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitForge Pro — Premium Fitness Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   CSS VARIABLES
+   ═══════════════════════════════════════════ */
+:root {
+  --primary: #F5C518;
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --cream: #E8D898;
+  --text: #FFFFFF;
+  --muted: #888888;
+  --border: #2A2A2A;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ═══════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 300ms ease, backdrop-filter 300ms ease;
+  background: transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nav-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  transition: color 250ms ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.nav-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 10px 24px;
+  border-radius: 4px;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245,197,24,0.35);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+  background: none;
+  border: none;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--primary);
+  transition: all 300ms ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ═══════════════════════════════════════════
+   HERO SECTION
+   ═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 40px 40px;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.hero-left {
+  flex: 0 0 55%;
+  max-width: 55%;
+}
+
+.hero-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.hero-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 96px;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: -1px;
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+
+.hero-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 380px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px 40px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(245,197,24,0.4);
+}
+
+.hero-cta:active {
+  transform: scale(0.97);
+}
+
+.hero-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  z-index: 1;
+}
+
+.hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Floating decorative shapes */
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.15;
+  border: 1px solid var(--primary);
+}
+
+.shape-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  top: 15%;
+  left: 8%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-square {
+  width: 60px;
+  height: 60px;
+  top: 55%;
+  left: 45%;
+  animation: float 6s ease-in-out infinite 2s;
+}
+
+.shape-circle-2 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  top: 25%;
+  right: 48%;
+  animation: float 6s ease-in-out infinite 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+/* Stat Bar */
+.stat-bar {
+  position: relative;
+  z-index: 5;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 48px 40px;
+}
+
+.stat-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 42px;
+  color: var(--primary);
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 8px;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
+   QUOTE SECTION
+   ═══════════════════════════════════════════ */
+.quote-section {
+  display: flex;
+  min-height: 520px;
+  background: var(--bg);
+}
+
+.quote-image {
+  flex: 0 0 50%;
+  max-width: 50%;
+  overflow: hidden;
+}
+
+.quote-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quote-content {
+  flex: 0 0 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  background: var(--bg);
+}
+
+.quote-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 120px;
+  color: var(--primary);
+  line-height: 0.7;
+  margin-bottom: 8px;
+}
+
+.quote-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.quote-attribution {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════
+   FEATURE CARDS SECTION
+   ═══════════════════════════════════════════ */
+.feature-section {
+  padding: 80px 0;
+  background: var(--bg);
+}
+
+.feature-grid {
+  padding: 0 40px;
+}
+
+.feature-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: var(--cream);
+  border-radius: 8px;
+  height: 380px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(245,197,24,0.2);
+}
+
+.feature-card-image {
+  flex: 0 0 75%;
+  overflow: hidden;
+}
+
+.feature-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.feature-card-title {
+  flex: 0 0 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--bg);
+  text-transform: uppercase;
+  padding: 0 16px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════
+   MEMBERSHIP SECTION
+   ═══════════════════════════════════════════ */
+.membership-section {
+  padding: 100px 40px;
+  background: var(--surface);
+}
+
+.membership-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.membership-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.membership-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.pricing-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.pricing-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  will-change: transform;
+}
+
+.pricing-card.featured {
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(245,197,24,0.1);
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(245,197,24,0.15);
+}
+
+.pricing-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.pricing-features {
+  list-style: none;
+  flex: 1;
+  margin-bottom: 32px;
+}
+
+.pricing-features li {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--text);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pricing-features li:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.pricing-cta {
+  display: block;
+  width: 100%;
+  background: var(--primary);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.pricing-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245,197,24,0.35);
+}
+
+.pricing-cta:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════
+   TRAINER BIO SECTION
+   ═══════════════════════════════════════════ */
+.trainer-section {
+  display: flex;
+  background: var(--bg);
+  min-height: 520px;
+}
+
+.trainer-photo {
+  flex: 0 0 50%;
+  max-width: 50%;
+  overflow: hidden;
+}
+
+.trainer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trainer-info {
+  flex: 0 0 50%;
+  max-width: 50%;
+  background: var(--surface);
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.trainer-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+
+.trainer-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 56px;
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.trainer-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.trainer-bio {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  max-width: 480px;
+}
+
+.trainer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  background: var(--primary);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: 100px;
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION
+   ═══════════════════════════════════════════ */
+.contact-section {
+  position: relative;
+  display: flex;
+  min-height: 560px;
+}
+
+.contact-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.contact-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+}
+
+.contact-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-left {
+  flex: 0 0 45%;
+  max-width: 45%;
+  padding-right: 60px;
+}
+
+.contact-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.contact-desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form input {
+  background: rgba(20,20,20,0.8);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 20px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+  transition: border-color 250ms ease;
+}
+
+.contact-form input::placeholder {
+  color: var(--muted);
+}
+
+.contact-form input:focus {
+  border-color: var(--primary);
+}
+
+.contact-submit {
+  background: var(--primary);
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.contact-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245,197,24,0.35);
+}
+
+.contact-submit:active {
+  transform: scale(0.97);
+}
+
+.contact-right {
+  flex: 0 0 55%;
+  max-width: 55%;
+  height: 100%;
+  min-height: 400px;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.contact-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 48px 40px 24px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.footer-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.footer-tagline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-nav {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.footer-nav a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  transition: color 250ms ease;
+}
+
+.footer-nav a:hover {
+  color: var(--primary);
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-social a {
+  color: var(--muted);
+  transition: color 250ms ease, transform 250ms ease;
+  display: flex;
+}
+
+.footer-social a:hover {
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.footer-social svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #555;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+   ═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.94);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger children */
+.stagger-children .reveal {
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE STYLES
+   ═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-headline {
+    font-size: 72px;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing-grid {
+    gap: 24px;
+  }
+
+  .quote-content {
+    padding: 40px;
+  }
+
+  .trainer-info {
+    padding: 40px;
+  }
+
+  .trainer-name {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: rgba(10,10,10,0.98);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 100px 40px 40px;
+    gap: 24px;
+    transition: right 300ms ease;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    padding: 100px 20px 40px;
+  }
+
+  .hero-left {
+    flex: none;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-headline {
+    font-size: 52px;
+  }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-right {
+    display: none;
+  }
+
+  .stat-bar-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .quote-section {
+    flex-direction: column;
+  }
+
+  .quote-image,
+  .quote-content {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .quote-image {
+    min-height: 280px;
+  }
+
+  .quote-content {
+    padding: 40px 20px;
+  }
+
+  .quote-text {
+    font-size: 28px;
+  }
+
+  .feature-section {
+    padding: 60px 20px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+
+  .membership-section {
+    padding: 60px 20px;
+  }
+
+  .membership-title {
+    font-size: 40px;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .trainer-section {
+    flex-direction: column;
+  }
+
+  .trainer-photo,
+  .trainer-info {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .trainer-photo {
+    min-height: 320px;
+  }
+
+  .trainer-info {
+    padding: 40px 20px;
+  }
+
+  .trainer-name {
+    font-size: 40px;
+  }
+
+  .contact-content {
+    flex-direction: column;
+    padding: 60px 20px;
+  }
+
+  .contact-left,
+  .contact-right {
+    flex: none;
+    max-width: 100%;
+    padding-right: 0;
+  }
+
+  .contact-right {
+    display: none;
+  }
+
+  .contact-heading {
+    font-size: 36px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .hero-shapes {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+     ═══════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand">FitForge Pro</a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero">HOME</a></li>
+    <li><a href="#membership">PROGRAMMES</a></li>
+    <li><a href="#trainer">ABOUT</a></li>
+    <li><a href="#contact">CONTACT</a></li>
+    <li><a href="#" class="nav-cta">DOWNLOAD APP</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+     ═══════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=90&fit=crop" alt="Cinematic gym interior with dramatic lighting">
+  </div>
+
+  <div class="hero-shapes">
+    <div class="shape shape-circle"></div>
+    <div class="shape shape-square"></div>
+    <div class="shape shape-circle-2"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <span class="hero-label">FitForge Pro Coaching</span>
+      <h1 class="hero-headline">Fitness For<br>Everyday<br>Athletes</h1>
+      <p class="hero-subtitle">With expert strength, hypertrophy and nutrition coaching — your transformation starts here.</p>
+      <button class="hero-cta">Start For Free</button>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=90&fit=crop" alt="Male athlete training with dramatic dark background">
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     STAT BAR
+     ═══════════════════════════════════════════ -->
+<div class="stat-bar" id="statBar">
+  <div class="stat-bar-inner">
+    <div class="stat-item">
+      <span class="stat-number" data-target="3560" data-suffix="+">0</span>
+      <span class="stat-label">Happy Clients</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="127" data-suffix="+">0</span>
+      <span class="stat-label">Expert Coaches</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-target="65" data-suffix="+">0</span>
+      <span class="stat-label">Fitness Programs</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     QUOTE SECTION
+     ═══════════════════════════════════════════ -->
+<section class="quote-section" id="quote">
+  <div class="quote-image reveal-left">
+    <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=90&fit=crop" alt="Bodybuilder lifting with high contrast lighting">
+  </div>
+  <div class="quote-content reveal-right">
+    <div class="quote-mark">&ldquo;</div>
+    <p class="quote-text">SUCCESS USUALLY COMES TO THOSE WHO ARE TOO BUSY TO BE LOOKING FOR IT.</p>
+    <p class="quote-attribution">&mdash; Henry David Thoreau</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FEATURE CARDS SECTION
+     ═══════════════════════════════════════════ -->
+<section class="feature-section" id="features">
+  <div class="feature-grid stagger-children">
+    <div class="feature-card reveal" style="--i:0;">
+      <div class="feature-card-image">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=90&fit=crop" alt="Group fitness class in action">
+      </div>
+      <div class="feature-card-title">Group Exercise Innovations</div>
+    </div>
+    <div class="feature-card reveal" style="--i:1;">
+      <div class="feature-card-image">
+        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=90&fit=crop" alt="Athlete motivation shot with dramatic lighting">
+      </div>
+      <div class="feature-card-title">Good Vibes</div>
+    </div>
+    <div class="feature-card reveal" style="--i:2;">
+      <div class="feature-card-image">
+        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=90&fit=crop" alt="Clean meal prep on dark surface">
+      </div>
+      <div class="feature-card-title">Perfectly Balanced Diet</div>
+    </div>
+    <div class="feature-card reveal" style="--i:3;">
+      <div class="feature-card-image">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=90&fit=crop" alt="Premium gym interior with equipment">
+      </div>
+      <div class="feature-card-title">Find Your Space</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MEMBERSHIP SECTION
+     ═══════════════════════════════════════════ -->
+<section class="membership-section" id="membership">
+  <div class="membership-header reveal">
+    <span class="membership-label">Billed Monthly</span>
+    <h2 class="membership-title">Membership</h2>
+  </div>
+  <div class="pricing-grid stagger-children">
+    <div class="pricing-card reveal" style="--i:0;">
+      <h3 class="pricing-name">Individual</h3>
+      <ul class="pricing-features">
+        <li>Access all areas</li>
+        <li>Unlimited standard classes</li>
+        <li>Health &amp; lifestyle assessment</li>
+        <li>Initial personal training session</li>
+        <li>Complimentary fit 3D body scan</li>
+        <li>Dedicated free members parking</li>
+      </ul>
+      <button class="pricing-cta">Only $9.00/Mo</button>
+    </div>
+    <div class="pricing-card featured reveal" style="--i:1;">
+      <h3 class="pricing-name">Pro</h3>
+      <ul class="pricing-features">
+        <li>Access all areas</li>
+        <li>Unlimited standard classes</li>
+        <li>Health &amp; lifestyle assessment</li>
+        <li>Initial personal training session</li>
+        <li>Complimentary fit 3D body scan</li>
+        <li>Dedicated free members parking</li>
+      </ul>
+      <button class="pricing-cta">Only $29.00/Mo</button>
+    </div>
+    <div class="pricing-card reveal" style="--i:2;">
+      <h3 class="pricing-name">Elite 1-on-1</h3>
+      <ul class="pricing-features">
+        <li>Access all areas</li>
+        <li>Unlimited standard classes</li>
+        <li>Health &amp; lifestyle assessment</li>
+        <li>Initial personal training session</li>
+        <li>Complimentary fit 3D body scan</li>
+        <li>Dedicated free members parking</li>
+      </ul>
+      <button class="pricing-cta">Only $149.00/Mo</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TRAINER BIO SECTION
+     ═══════════════════════════════════════════ -->
+<section class="trainer-section" id="trainer">
+  <div class="trainer-photo reveal-left">
+    <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&q=90&fit=crop" alt="Certified personal trainer and nutrition coach">
+  </div>
+  <div class="trainer-info reveal-right">
+    <span class="trainer-label">Meet Your Coach</span>
+    <h2 class="trainer-name">Marcus Steele</h2>
+    <p class="trainer-title">Certified Personal Trainer &middot; Nutrition Expert</p>
+    <p class="trainer-bio">With over a decade of experience transforming bodies and minds, Marcus combines evidence-based strength training with personalised nutrition protocols. His approach has helped over 500 clients break through plateaus and achieve sustainable results. Whether you are a beginner or seasoned athlete, Marcus designs programmes that fit your lifestyle and push your limits.</p>
+    <div class="trainer-badges">
+      <span class="badge">NASM Certified</span>
+      <span class="badge">10+ Years</span>
+      <span class="badge">500+ Clients</span>
+      <span class="badge">Online Coach</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT SECTION
+     ═══════════════════════════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="contact-bg">
+    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&q=90&fit=crop" alt="Gym equipment dark moody background">
+  </div>
+  <div class="contact-content">
+    <div class="contact-left reveal">
+      <h2 class="contact-heading">Ask Us Anything</h2>
+      <p class="contact-desc">Have questions? Fill out the form or reach us directly.</p>
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent! We will get back to you soon.');">
+        <input type="email" placeholder="Email address" required>
+        <input type="text" placeholder="Your name" required>
+        <button type="submit" class="contact-submit">Send Message</button>
+      </form>
+    </div>
+    <div class="contact-right reveal">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=90&fit=crop" alt="Gym equipment interior">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">FitForge Pro</div>
+      <p class="footer-tagline">Forge your best self</p>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="#hero">HOME</a></li>
+      <li><a href="#membership">PROGRAMMES</a></li>
+      <li><a href="#trainer">ABOUT</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+      </a>
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </a>
+      <a href="#" aria-label="Twitter">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 FitForge Pro. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// STICKY NAVBAR
+// ═══════════════════════════════════════════
+(function initNavbar() {
+  const navbar = document.getElementById('navbar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }, { passive: true });
+})();
+
+// ═══════════════════════════════════════════
+// HAMBURGER MENU
+// ═══════════════════════════════════════════
+(function initHamburger() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+
+  // Close menu on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+})();
+
+// ═══════════════════════════════════════════
+// PARALLAX HERO
+// ═══════════════════════════════════════════
+(function initParallax() {
+  const heroBg = document.querySelector('#heroBg img');
+  if (!heroBg) return;
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        heroBg.style.transform = 'translateY(' + (scrollY * 0.4) + 'px)';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+// ═══════════════════════════════════════════
+// COUNTER ANIMATION
+// ═══════════════════════════════════════════
+(function initCounters() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  if (!statNumbers.length) return;
+
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function animateCounter(el, target, suffix, duration) {
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuart(progress);
+      const current = Math.round(eased * target);
+      el.textContent = current.toLocaleString() + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        animateCounter(el, target, suffix, 2000);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(el => observer.observe(el));
+})();
+
+// ═══════════════════════════════════════════
+// SCROLL REVEAL (IntersectionObserver)
+// ═══════════════════════════════════════════
+(function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealElements.forEach(el => observer.observe(el));
+})();
+
+// ═══════════════════════════════════════════
+// 3D CARD TILT
+// ═══════════════════════════════════════════
+(function init3DTilt() {
+  const cards = document.querySelectorAll('.feature-card, .pricing-card');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = 'perspective(800px) rotateX(' + (-y * 12) + 'deg) rotateY(' + (x * 12) + 'deg) scale(1.03)';
+      card.style.transition = 'transform 100ms ease';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.transition = 'transform 400ms ease';
+    });
+  });
+})();
+
+// ═══════════════════════════════════════════
+// SMOOTH SCROLL FOR ANCHOR LINKS
+// ═══════════════════════════════════════════
+(function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

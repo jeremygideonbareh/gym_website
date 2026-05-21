@@ -126,16 +126,17 @@ a {
   justify-content: center;
   font-family: var(--font-barlow), sans-serif;
   font-weight: 800;
-  font-size: clamp(40px, 8vw, 96px);
+  font-size: clamp(28px, 7vw, 96px);
   text-transform: uppercase;
   letter-spacing: -1px;
-  line-height: 0.95;
+  line-height: 1;
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.4s ease;
   text-align: center;
-  padding: 0 20px;
-  white-space: nowrap;
+  padding: 0 16px;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .preloader-tagline.active {
@@ -1398,6 +1399,57 @@ body:not(.loaded) {
   }
   .hero-shapes {
     display: none;
+  }
+}
+
+/* ═══ SMALL MOBILE (≤480px) ═══ */
+@media (max-width: 480px) {
+  .hero-headline {
+    font-size: 38px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    max-width: 100%;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-cta {
+    font-size: 13px;
+    padding: 12px 32px;
+  }
+  .hero-social-proof {
+    font-size: 12px;
+  }
+  .scroll-indicator {
+    bottom: 16px;
+  }
+  .hero-content {
+    padding: 100px 16px 40px;
+  }
+  .membership-title {
+    font-size: 32px;
+  }
+  .pricing-name {
+    font-size: 22px;
+  }
+  .trainer-name {
+    font-size: 32px;
+  }
+  .trainer-bio {
+    font-size: 14px;
+  }
+  .contact-heading {
+    font-size: 28px;
+  }
+  .contact-form input {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  .preloader-tagline {
+    font-size: clamp(20px, 6vw, 40px);
   }
 }
 

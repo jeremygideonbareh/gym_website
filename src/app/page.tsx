@@ -17,6 +17,42 @@ const IMAGES = {
 
 export default function Home() {
   useEffect(() => {
+    /* Preloader */
+    const preloader = document.getElementById('preloader')
+    if (preloader) {
+      const taglines = [
+        document.getElementById('tagline1'),
+        document.getElementById('tagline2'),
+        document.getElementById('tagline3'),
+      ]
+      let current = 0
+      const showTagline = (index: number) => {
+        taglines.forEach((t, i) => t?.classList.toggle('active', i === index))
+      }
+      showTagline(0)
+      setTimeout(() => showTagline(1), 1200)
+      setTimeout(() => showTagline(2), 2400)
+      setTimeout(() => {
+        preloader.style.transition = 'opacity 0.6s ease, visibility 0.6s'
+        preloader.style.opacity = '0'
+        preloader.style.visibility = 'hidden'
+        setTimeout(() => {
+          preloader.style.display = 'none'
+          document.body.classList.add('loaded')
+        }, 600)
+      }, 4000)
+    }
+
+    /* Scroll progress bar */
+    const progressBar = document.getElementById('scrollProgress')
+    const updateProgress = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      if (progressBar) progressBar.style.width = progress + '%'
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true })
+
     /* Sticky navbar */
     const navbar = document.getElementById('navbar')
     const scrollHandler = () => {
@@ -143,6 +179,22 @@ export default function Home() {
 
   return (
     <>
+      {/* ═══ SCROLL PROGRESS BAR ═══ */}
+      <div id="scrollProgress" className="scroll-progress"></div>
+
+      {/* ═══ PRELOADER ═══ */}
+      <div className="preloader" id="preloader">
+        <div className="preloader-ring"></div>
+        <div className="preloader-content">
+          <div className="preloader-tagline text-white" id="tagline1">DISCIPLINE</div>
+          <div className="preloader-tagline text-yellow" id="tagline2">IS THE BRIDGE</div>
+          <div className="preloader-tagline text-yellow" id="tagline3">BETWEEN GOALS AND RESULTS</div>
+        </div>
+        <div className="preloader-bar-track">
+          <div className="preloader-bar-fill"></div>
+        </div>
+      </div>
+
       {/* ═══ NAVBAR ═══ */}
       <nav className="navbar" id="navbar">
         <a href="#" className="nav-brand">

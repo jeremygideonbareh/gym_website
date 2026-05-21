@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
+import WhyChooseUs from '@/components/demo/animated-scroll-demo'
 
 const IMAGES = {
   heroBg: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=90&fit=crop',
@@ -36,8 +37,10 @@ export default function Home() {
         preloader.style.transition = 'opacity 0.6s ease, visibility 0.6s'
         preloader.style.opacity = '0'
         preloader.style.visibility = 'hidden'
+        document.getElementById('hero')?.classList.add('hero-visible')
         setTimeout(() => {
           preloader.style.display = 'none'
+          window.scrollTo(0, 0)
           document.body.classList.add('loaded')
         }, 600)
       }, 4000)
@@ -177,6 +180,50 @@ export default function Home() {
     }
   }, [])
 
+  /* WhyChooseUs scroll‑lock gate */
+  const [locked, setLocked] = useState(false)
+  const [lockSession, setLockSession] = useState(0)
+  const [entryDir, setEntryDir] = useState<'up' | 'down'>('down')
+  const whyRef = useRef<HTMLDivElement>(null)
+
+  const handleEscapeUp = useCallback(() => {
+    setLocked(false)
+    document.body.style.overflow = ''
+    document.getElementById('quote')?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
+  const handleEscapeDown = useCallback(() => {
+    setLocked(false)
+    document.body.style.overflow = ''
+    document.getElementById('membership')?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = locked ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [locked])
+
+  useEffect(() => {
+    const el = whyRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const fromBelow = entry.boundingClientRect.top < 100
+          setEntryDir(fromBelow ? 'up' : 'down')
+          el.scrollIntoView({ block: 'start' })
+          setLockSession((s) => s + 1)
+          setLocked(true)
+        } else {
+          setLocked(false)
+        }
+      },
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       {/* ═══ SCROLL PROGRESS BAR ═══ */}
@@ -184,11 +231,13 @@ export default function Home() {
 
       {/* ═══ PRELOADER ═══ */}
       <div className="preloader" id="preloader">
-        <div className="preloader-ring"></div>
-        <div className="preloader-content">
-          <div className="preloader-tagline text-white" id="tagline1">DISCIPLINE</div>
-          <div className="preloader-tagline text-yellow" id="tagline2">IS THE BRIDGE</div>
-          <div className="preloader-tagline text-yellow" id="tagline3">BETWEEN GOALS AND RESULTS</div>
+        <div className="preloader-inner">
+          <div className="preloader-ring"></div>
+          <div className="preloader-content">
+            <div className="preloader-tagline text-white" id="tagline1">DISCIPLINE</div>
+            <div className="preloader-tagline text-yellow" id="tagline2">IS THE BRIDGE</div>
+            <div className="preloader-tagline text-yellow" id="tagline3">BETWEEN GOALS AND RESULTS</div>
+          </div>
         </div>
         <div className="preloader-bar-track">
           <div className="preloader-bar-fill"></div>
@@ -231,6 +280,7 @@ export default function Home() {
         <div className="hero-bg" id="heroBg">
           <img src={IMAGES.heroBg} alt="Cinematic gym interior with dramatic lighting" />
         </div>
+        <div className="hero-gradient-overlay"></div>
 
         <div className="hero-shapes">
           <div className="shape shape-circle"></div>
@@ -242,21 +292,29 @@ export default function Home() {
           <div className="hero-left">
             <span className="hero-label">FitForge Pro Coaching</span>
             <h1 className="hero-headline">
-              Fitness For
-              <br />
-              Everyday
-              <br />
-              Athletes
+              <span className="hero-headline-line" style={{ '--i': 0 } as React.CSSProperties}>Fitness For</span>
+              <span className="hero-headline-line" style={{ '--i': 1 } as React.CSSProperties}>Everyday</span>
+              <span className="hero-headline-line" style={{ '--i': 2 } as React.CSSProperties}>Athletes</span>
             </h1>
             <p className="hero-subtitle">
               With expert strength, hypertrophy and nutrition coaching — your transformation starts here.
             </p>
-            <button className="hero-cta">Start For Free</button>
+            <div className="hero-cta-group">
+              <button className="hero-cta">Start For Free</button>
+              <span className="hero-social-proof">Join 3,560+ members</span>
+            </div>
           </div>
         </div>
 
         <div className="hero-right">
           <img src={IMAGES.heroAthlete} alt="Male athlete training with dramatic dark background" />
+        </div>
+
+        <div className="scroll-indicator">
+          <span className="scroll-indicator-text">SCROLL</span>
+          <svg className="scroll-indicator-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </section>
 
@@ -285,7 +343,7 @@ export default function Home() {
       </div>
 
       {/* ═══ QUOTE ═══ */}
-      <section className="quote-section">
+      <section className="quote-section" id="quote">
         <div className="quote-image reveal-left">
           <img src={IMAGES.quote} alt="Bodybuilder lifting with high contrast lighting" />
         </div>
@@ -298,24 +356,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ FEATURE CARDS ═══ */}
-      <section className="feature-section">
-        <div className="feature-grid stagger-children">
-          {[
-            { title: 'Group Exercise Innovations', img: IMAGES.card1, alt: 'Group fitness class in action' },
-            { title: 'Good Vibes', img: IMAGES.card2, alt: 'Athlete motivation shot with dramatic lighting' },
-            { title: 'Perfectly Balanced Diet', img: IMAGES.card3, alt: 'Clean meal prep on dark surface' },
-            { title: 'Find Your Space', img: IMAGES.card4, alt: 'Premium gym interior with equipment' },
-          ].map((card, i) => (
-            <div className="feature-card reveal" style={{ '--i': i } as React.CSSProperties} key={card.title}>
-              <div className="feature-card-image">
-                <img src={card.img} alt={card.alt} />
-              </div>
-              <div className="feature-card-title">{card.title}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* ═══ WHY CHOOSE US — full‑screen scroll‑lock gate ═══ */}
+      <div ref={whyRef} className="h-screen w-full">
+        <WhyChooseUs
+          key={lockSession}
+          onEscapeUp={handleEscapeUp}
+          onEscapeDown={handleEscapeDown}
+          locked={locked}
+          initialPage={entryDir === 'up' ? 5 : 1}
+        />
+      </div>
 
       {/* ═══ MEMBERSHIP ═══ */}
       <section className="membership-section" id="membership">

@@ -64,12 +64,22 @@ a {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 0;
+}
+
+.preloader-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+  width: 260px;
 }
 
 .preloader-ring {
   position: absolute;
-  width: 260px;
-  height: 260px;
+  inset: 0;
   border-radius: 50%;
   border: 1px solid rgba(245, 197, 24, 0.08);
   animation: preloaderPulse 3s ease-in-out infinite;
@@ -99,15 +109,21 @@ a {
 }
 
 .preloader-content {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
 
 .preloader-tagline {
   position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-barlow), sans-serif;
   font-weight: 800;
   font-size: clamp(40px, 8vw, 96px);
@@ -119,6 +135,7 @@ a {
   transition: all 0.4s ease;
   text-align: center;
   padding: 0 20px;
+  white-space: nowrap;
 }
 
 .preloader-tagline.active {
@@ -132,6 +149,8 @@ a {
 .preloader-bar-track {
   position: absolute;
   bottom: 15%;
+  left: 50%;
+  translate: -50% 0;
   width: 200px;
   height: 2px;
   background: rgba(255, 255, 255, 0.1);
@@ -161,6 +180,145 @@ body.loaded {
 
 body:not(.loaded) {
   overflow: hidden;
+}
+
+/* ═══ HERO ENTRANCE ANIMATIONS ═══ */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroSlideRight {
+  from { opacity: 0; transform: translateX(80px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes heroGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(245, 197, 24, 0.25); }
+  50% { box-shadow: 0 0 50px rgba(245, 197, 24, 0.5); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-label,
+.hero-headline,
+.hero-subtitle,
+.hero-cta-group,
+.hero-right,
+.hero-shapes {
+  opacity: 0;
+}
+
+.hero-visible .hero-label {
+  animation: heroFadeUp 0.6s ease forwards;
+  animation-delay: 0s;
+}
+
+.hero-visible .hero-headline-line {
+  display: block;
+  animation: heroFadeUp 0.6s ease forwards;
+  animation-delay: calc(0.15s * var(--i, 0) + 0.2s);
+}
+
+.hero-visible .hero-subtitle {
+  animation: heroFadeUp 0.6s ease forwards;
+  animation-delay: 0.65s;
+}
+
+.hero-visible .hero-cta-group {
+  animation: heroFadeUp 0.6s ease forwards;
+  animation-delay: 0.85s;
+}
+
+.hero-visible .hero-right {
+  animation: heroSlideRight 0.8s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.hero-visible .hero-shapes {
+  animation: heroFadeUp 0.8s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(245, 197, 24, 0.03) 0%, transparent 30%, transparent 70%, rgba(245, 197, 24, 0.02) 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero-headline-line {
+  display: block;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero-cta {
+  animation: heroGlow 3s ease-in-out infinite;
+}
+
+.hero-social-proof {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ═══ SCROLL INDICATOR ═══ */
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  transition-delay: 1.2s;
+}
+
+.hero-visible .scroll-indicator {
+  opacity: 1;
+}
+
+.scroll-indicator-text {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.2em;
+}
+
+.scroll-indicator-chevron {
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.3);
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(6px); opacity: 1; }
 }
 
 /* ═══ NAVBAR ═══ */
